@@ -52,9 +52,13 @@ class MoonShineUser extends Model
 ```php
 use MoonShine\Permissions\Traits\WithPermissions;
 
-class PostResource extends ModelResource
+class MoonShineUserResource extends ModelResource
 {
     use WithPermissions;
+
+    public string $model = MoonShine\Permissions\Models\MoonshineUser::class;
+
+    // ...
 }
 ```
 
