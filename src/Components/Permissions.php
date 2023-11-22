@@ -7,7 +7,7 @@ namespace MoonShine\Permissions\Components;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 use MoonShine\Components\FormBuilder;
-use MoonShine\Components\MoonshineComponent;
+use MoonShine\Components\MoonShineComponent;
 use MoonShine\Decorations\Column;
 use MoonShine\Decorations\Divider;
 use MoonShine\Decorations\Grid;
@@ -19,7 +19,7 @@ use MoonShine\Traits\WithLabel;
 /**
  * @method static static make(Closure|string $label, ModelResource $resource)
  */
-final class Permissions extends MoonshineComponent
+final class Permissions extends MoonShineComponent
 {
     use HasResource;
     use WithLabel;
