@@ -9,7 +9,7 @@
 ```shell
 composer require moonshine/permissions
 ```
-
+### Run migration
 ```shell
 php artisan migrate
 ```
@@ -36,7 +36,7 @@ return [
 ];
 ```
 
-Or add trait HasChangeLog to user model
+Or add trait HasMoonShinePermissions to user model
 
 ```php
 use MoonShine\Permissions\Traits\HasMoonShinePermissions;
@@ -47,7 +47,7 @@ class MoonShineUser extends Model
 }
 ```
 
-2. Add trait to resource
+2. Add trait WithPermissions to resource
 
 ```php
 use MoonShine\Permissions\Traits\WithPermissions;
