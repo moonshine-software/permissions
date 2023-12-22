@@ -7,7 +7,6 @@ namespace MoonShine\Permissions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use MoonShine\Contracts\Resources\ResourceContract;
-use MoonShine\MoonShine;
 use MoonShine\Permissions\Traits\HasMoonShinePermissions;
 
 final class PermissionsServiceProvider extends ServiceProvider
@@ -17,7 +16,7 @@ final class PermissionsServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'moonshine-permissions');
 
-        MoonShine::defineAuthorization(
+        moonshine()->defineAuthorization(
             static function (ResourceContract $resource, Model $user, string $ability): bool {
                 $hasUserPermissions = in_array(
                     HasMoonShinePermissions::class,
