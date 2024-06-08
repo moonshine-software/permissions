@@ -68,3 +68,21 @@ class MoonShineUserResource extends ModelResource
 }
 ```
 
+### Example of condition to display in menu
+
+```php
+use MoonShine\MoonShineRequest;
+
+protected function menu(): array
+{
+    return [
+        MenuItem::make('Posts', new PostResource())
+            ->canSee(function (MoonShineRequest $request) {
+                return $request->user()->isHavePermission(
+                    PostResource::class,
+                    'view'
+                );
+            }),
+    ];
+}
+```
