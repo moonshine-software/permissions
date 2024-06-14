@@ -16,7 +16,7 @@ php artisan migrate
 
 ### Get started
 
-1. Change MoonShineUser model in app/moonshine.php
+1. Change MoonShineUser model in config/moonshine.php
 
 ```php
 use MoonShine\Permissions\Models\MoonshineUser;
