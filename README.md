@@ -50,7 +50,7 @@ class MoonShineUser extends Model
 2. Publish system resources
 
 ```shell
-php artisan moonshine:publish resources
+php artisan moonshine:publish
 ````
 
 3. Add trait WithPermissions to MoonShineUserResource
