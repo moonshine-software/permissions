@@ -16,7 +16,7 @@ php artisan migrate
 
 ### Get started
 
-1. Change MoonShineUser model in app/moonshine.php
+1. Change MoonShineUser model in config/moonshine.php
 
 ```php
 use MoonShine\Permissions\Models\MoonshineUser;
@@ -50,7 +50,7 @@ class MoonShineUser extends Model
 2. Publish system resources
 
 ```shell
-php artisan moonshine:publish resources
+php artisan moonshine:publish
 ````
 
 3. Add trait WithPermissions to MoonShineUserResource
