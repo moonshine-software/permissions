@@ -6,7 +6,7 @@ namespace MoonShine\Permissions\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use MoonShine\MoonShineAuth;
+use MoonShine\Laravel\MoonShineAuth;
 
 class MoonshineUserPermission extends Model
 {

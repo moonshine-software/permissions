@@ -4,42 +4,29 @@ declare(strict_types=1);
 
 namespace MoonShine\Permissions\Traits;
 
-use Illuminate\Support\Facades\Route;
-use MoonShine\Decorations\Heading;
-use MoonShine\Enums\Layer;
-use MoonShine\Enums\PageType;
-use MoonShine\Models\MoonshineUserRole;
+use MoonShine\Laravel\Models\MoonshineUserRole;
+use MoonShine\Laravel\MoonShineAuth;
+use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\Permissions\Components\Permissions;
-use MoonShine\Permissions\Http\Controllers\PermissionController;
-use MoonShine\Resources\Resource;
+use MoonShine\Support\Enums\Layer;
 
 /**
- * @mixin Resource
+ * @mixin ModelResource
  */
 trait WithPermissions
 {
-    protected function bootWithPermissions(): void
+    protected function loadWithPermissions(): void
     {
-        $this->getPages()
-            ->findByType(PageType::FORM)
+        $this->getFormPage()
             ?->pushToLayer(
                 Layer::BOTTOM,
                 Permissions::make(
                     'Permissions',
                     $this
                 )->canSee(
-                    fn() => auth()->user()->moonshine_user_role_id === MoonshineUserRole::DEFAULT_ROLE_ID
+                    fn (
+                    ) => MoonShineAuth::getGuard()->user()->moonshine_user_role_id === MoonshineUserRole::DEFAULT_ROLE_ID
                 )
             );
-    }
-
-    protected function resolveRoutes(): void
-    {
-        parent::resolveRoutes();
-
-        Route::post(
-            'permissions/{resourceItem}',
-            PermissionController::class
-        )->name('permissions');
     }
 }

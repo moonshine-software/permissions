@@ -1,9 +1,9 @@
-@if($item->exists)
-    <x-moonshine::divider />
+@if($itemExists)
+    <x-moonshine::layout.divider />
 
     <x-moonshine::title class="mb-6">
         {{ $label }}
     </x-moonshine::title>
 
-    {{ $form->render() }}
+    {!! $form !!}
 @endif

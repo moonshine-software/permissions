@@ -2,21 +2,22 @@
 
 ### Requirements
 
-- MoonShine v2.0+
+- MoonShine v3.0+
 
 ### Installation
 
 ```shell
 composer require moonshine/permissions
 ```
-### Run migration
+### Run migrations
+
 ```shell
 php artisan migrate
 ```
 
 ### Get started
 
-1. Change MoonShineUser model in config/moonshine.php
+1. Change MoonshineUser model in config/moonshine.php or in MoonShineServiceProvider
 
 ```php
 use MoonShine\Permissions\Models\MoonshineUser;
@@ -41,19 +42,13 @@ Or add trait HasMoonShinePermissions to user model
 ```php
 use MoonShine\Permissions\Traits\HasMoonShinePermissions;
 
-class MoonShineUser extends Model
+class MoonshineUser extends Model
 {
     use HasMoonShinePermissions;
 }
 ```
 
-2. Publish system resources
-
-```shell
-php artisan moonshine:publish
-````
-
-3. Add trait WithPermissions to MoonShineUserResource
+2. Add trait WithPermissions to MoonShineUserResource and change $model
 
 ```php
 use MoonShine\Permissions\Traits\WithPermissions;
@@ -71,18 +66,14 @@ class MoonShineUserResource extends ModelResource
 ### Example of condition to display in menu
 
 ```php
-use MoonShine\MoonShineRequest;
+use MoonShine\Laravel\Enums\Ability;
 
 protected function menu(): array
 {
     return [
-        MenuItem::make('Posts', new PostResource())
-            ->canSee(function (MoonShineRequest $request) {
-                return $request->user()->isHavePermission(
-                    PostResource::class,
-                    'view'
-                );
-            }),
+        MenuItem::make('Posts', PostResource::class)
+            ->canSee(fn () => auth()->user()->isHavePermission(PostResource::class, Ability::VIEW))
+        ,
     ];
 }
 ```

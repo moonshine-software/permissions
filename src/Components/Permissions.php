@@ -6,15 +6,16 @@ namespace MoonShine\Permissions\Components;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
-use MoonShine\Components\FormBuilder;
-use MoonShine\Components\MoonShineComponent;
-use MoonShine\Decorations\Column;
-use MoonShine\Decorations\Divider;
-use MoonShine\Decorations\Grid;
-use MoonShine\Fields\Switcher;
-use MoonShine\Resources\ModelResource;
-use MoonShine\Traits\HasResource;
-use MoonShine\Traits\WithLabel;
+use MoonShine\Core\Traits\HasResource;
+use MoonShine\Laravel\Resources\ModelResource;
+use MoonShine\Permissions\Traits\HasMoonShinePermissions;
+use MoonShine\UI\Components\FormBuilder;
+use MoonShine\UI\Components\Layout\Column;
+use MoonShine\UI\Components\Layout\Divider;
+use MoonShine\UI\Components\Layout\Grid;
+use MoonShine\UI\Components\MoonShineComponent;
+use MoonShine\UI\Fields\Switcher;
+use MoonShine\UI\Traits\WithLabel;
 
 /**
  * @method static static make(Closure|string $label, ModelResource $resource)
@@ -38,8 +39,10 @@ final class Permissions extends MoonShineComponent
         Closure|string $label,
         ModelResource $resource
     ) {
-        $this->setResource($resource);
+        parent::__construct();
+
         $this->setLabel($label);
+        $this->setResource($resource);
     }
 
     public function getItem(): Model
@@ -49,43 +52,50 @@ final class Permissions extends MoonShineComponent
 
     public function getForm(): FormBuilder
     {
-        $url = $this->getResource()
-            ->route('permissions', $this->getItem()->getKey());
+        $url = $this->getResource()->getRoute('permissions', $this->getItem()->getKey());
 
         $elements = [];
         $values = [];
         $all = true;
 
-        foreach (moonshine()->getResources() as $resource) {
+        /**
+         * @var HasMoonShinePermissions $item
+         */
+        $item = $this->getItem();
+
+        /**
+         * @var ModelResource $resource
+         */
+        foreach ($this->getCore()->getResources() as $resource) {
             $checkboxes = [];
             $class = 'ps_' . class_basename($resource::class);
             $allSections = true;
 
-            foreach ($resource->gateAbilities() as $ability) {
-                $values['permissions'][$resource::class][$ability] = $this->getItem()->isHavePermission(
+            foreach ($resource->getGateAbilities() as $ability) {
+                $values['permissions'][$resource::class][$ability->value] = $item->isHavePermission(
                     $resource::class,
                     $ability
                 );
 
-                if (! $values['permissions'][$resource::class][$ability]) {
+                if (! $values['permissions'][$resource::class][$ability->value]) {
                     $allSections = false;
                     $all = false;
                 }
 
                 $checkboxes[] = Switcher::make(
-                    $ability,
-                    "permissions." . $resource::class . ".$ability"
+                    $ability->value,
+                    "permissions." . $resource::class . ".$ability->value"
                 )
                     ->customAttributes(['class' => 'permission_switcher ' . $class])
-                    ->setName("permissions[" . $resource::class . "][$ability]");
+                    ->setNameAttribute("permissions[" . $resource::class . "][$ability->value]");
             }
 
             $elements[] = Column::make([
-                Switcher::make($resource->title())->customAttributes([
+                Switcher::make($resource->getTitle())->customAttributes([
                     'class' => 'permission_switcher_section',
                     '@change' => "document
                           .querySelectorAll('.$class')
-                          .forEach((el) => {el.checked = parseInt(event.target.value); el.dispatchEvent(new Event('change'))})",
+                          .forEach((el) => {el.checked = event.target.checked; el.dispatchEvent(new Event('change'))})",
                 ])->setValue($allSections)->hint('Toggle off/on all'),
 
                 ...$checkboxes,
@@ -99,7 +109,7 @@ final class Permissions extends MoonShineComponent
                     '@change' => <<<'JS'
                         document
                           .querySelectorAll('.permission_switcher, .permission_switcher_section')
-                          .forEach((el) => {el.checked = parseInt(event.target.value); el.dispatchEvent(new Event('change'))})
+                          .forEach((el) => {el.checked = event.target.checked; el.dispatchEvent(new Event('change'))})
                     JS
     ,
                 ])->setValue($all),
@@ -114,13 +124,14 @@ final class Permissions extends MoonShineComponent
 
     protected function viewData(): array
     {
+        $itemExists = $this->getItem()?->exists;
+
         return [
-            'label' => $this->label(),
-            'form' => $this->getItem()?->exists
+            'itemExists' => $itemExists,
+            'label' => $this->getLabel(),
+            'form' => $itemExists
                 ? $this->getForm()
                 : '',
-            'item' => $this->getItem(),
-            'resource' => $this->getResource(),
         ];
     }
 }

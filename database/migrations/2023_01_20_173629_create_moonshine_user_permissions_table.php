@@ -9,11 +9,8 @@ return new class extends Migration {
     {
         Schema::create('moonshine_user_permissions', static function (Blueprint $table): void {
             $table->id();
-
             $table->foreignId('moonshine_user_id');
-
             $table->json('permissions');
-
             $table->timestamps();
         });
     }

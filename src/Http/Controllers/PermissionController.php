@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace MoonShine\Permissions\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
-use MoonShine\Http\Controllers\MoonShineController;
+use MoonShine\Laravel\Http\Controllers\MoonShineController;
 use MoonShine\Permissions\Http\Requests\PermissionFormRequest;
 use MoonShine\Permissions\Models\MoonshineUserPermission;
+use MoonShine\Support\Enums\ToastType;
 
 class PermissionController extends MoonShineController
 {
@@ -15,7 +16,7 @@ class PermissionController extends MoonShineController
     {
         $item = $request
             ->getResource()
-            ->getItem();
+            ?->getItem();
 
         if (! $request->has('permissions')) {
             $item->moonshineUserPermission()->delete();
@@ -30,7 +31,7 @@ class PermissionController extends MoonShineController
 
         $this->toast(
             __('moonshine::ui.saved'),
-            'success'
+            ToastType::SUCCESS
         );
 
         return back();
