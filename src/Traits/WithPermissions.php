@@ -25,7 +25,7 @@ trait WithPermissions
                     $this
                 )->canSee(
                     fn (
-                    ) => MoonShineAuth::getGuard()->user()->moonshine_user_role_id === MoonshineUserRole::DEFAULT_ROLE_ID
+                    ): bool => MoonShineAuth::getGuard()->user()->moonshine_user_role_id === MoonshineUserRole::DEFAULT_ROLE_ID
                 )
             );
     }

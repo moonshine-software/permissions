@@ -16,8 +16,6 @@ final class PermissionsServiceProvider extends ServiceProvider
 {
     /**
      * @param  ConfiguratorContract<MoonShineConfigurator>  $configurator
-     *
-     * @return void
      */
     public function boot(ConfiguratorContract $configurator): void
     {
