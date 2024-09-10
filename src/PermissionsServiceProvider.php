@@ -15,7 +15,7 @@ use MoonShine\Permissions\Traits\HasMoonShinePermissions;
 final class PermissionsServiceProvider extends ServiceProvider
 {
     /**
-     * @param  ConfiguratorContract<MoonShineConfigurator>  $configurator
+     * @param  MoonShineConfigurator  $configurator
      */
     public function boot(ConfiguratorContract $configurator): void
     {
