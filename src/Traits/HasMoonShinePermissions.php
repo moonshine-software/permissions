@@ -6,14 +6,14 @@ namespace MoonShine\Permissions\Traits;
 
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use MoonShine\Laravel\Enums\Ability;
-use MoonShine\Permissions\Models\MoonshineUserPermission;
 use MoonShine\Laravel\MoonShineAuth;
+use MoonShine\Permissions\Models\MoonshineUserPermission;
 
 trait HasMoonShinePermissions
 {
     public function isHavePermission(string $resourceClass, Ability $ability): bool
     {
-        return !empty($this->moonshineUserPermission?->permissions[$resourceClass][$ability->value]);
+        return ! empty($this->moonshineUserPermission?->permissions[$resourceClass][$ability->value]);
     }
 
     public function moonshineUserPermission(): HasOne
