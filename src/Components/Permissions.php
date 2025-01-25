@@ -91,12 +91,15 @@ final class Permissions extends MoonShineComponent
             }
 
             $elements[] = Column::make([
-                Switcher::make($resource->getTitle())->customAttributes([
-                    'class' => 'permission_switcher_section',
-                    '@change' => "document
-                          .querySelectorAll('.$class')
-                          .forEach((el) => {el.checked = event.target.checked; el.dispatchEvent(new Event('change'))})",
-                ])->setValue($allSections)->hint('Toggle off/on all'),
+                Switcher::make($resource->getTitle())
+                    ->customAttributes([
+                        'class' => 'permission_switcher_section',
+                        '@change' => "document
+                              .querySelectorAll('.$class')
+                              .forEach((el) => {el.checked = event.target.checked; el.dispatchEvent(new Event('change'))})",
+                    ])
+                    ->setValue($allSections)
+                    ->hint(__('moonshine-permissions::permissions.toggle_off_on_all')),
 
                 ...$checkboxes,
                 Divider::make(),
@@ -105,7 +108,7 @@ final class Permissions extends MoonShineComponent
 
         return FormBuilder::make($url)
             ->fields([
-                Switcher::make('All')->customAttributes([
+                Switcher::make(__('moonshine-permissions::permissions.all'))->customAttributes([
                     '@change' => <<<'JS'
                         document
                           .querySelectorAll('.permission_switcher, .permission_switcher_section')
@@ -119,7 +122,7 @@ final class Permissions extends MoonShineComponent
                 ),
             ])
             ->fill($values)
-            ->submit(__('moonshine::ui.save'));
+            ->submit(__('moonshine-permissions::permissions.save'));
     }
 
     protected function viewData(): array

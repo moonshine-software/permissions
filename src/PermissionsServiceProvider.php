@@ -23,6 +23,12 @@ final class PermissionsServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../routes/permissions.php');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'moonshine-permissions');
 
+        $this->loadTranslationsFrom(__DIR__ . '/../lang', 'moonshine-permissions');
+
+        $this->publishes([
+            __DIR__ . '/../lang' => $this->app->langPath('vendor/moonshine-permissions'),
+        ]);
+
         $configurator->authorizationRules(
             static function (ResourceContract $resource, Model $user, Ability $ability): bool {
                 $hasUserPermissions = in_array(
