@@ -21,7 +21,7 @@ trait WithPermissions
             ?->pushToLayer(
                 Layer::BOTTOM,
                 Permissions::make(
-                    'Permissions',
+                    __('moonshine-permissions::permissions.title'),
                     $this
                 )->canSee(
                     fn (
