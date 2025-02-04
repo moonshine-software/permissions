@@ -83,7 +83,7 @@ final class Permissions extends MoonShineComponent
                 }
 
                 $checkboxes[] = Switcher::make(
-                    __($ability->value),
+                    __('moonshine-permissions::permissions.' . $ability->value),
                     "permissions." . $resource::class . ".$ability->value"
                 )
                     ->customAttributes(['class' => 'permission_switcher ' . $class])
