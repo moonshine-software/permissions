@@ -21,7 +21,7 @@ class MoonshineUserPermission extends Model
 
     public function moonshineUser(): BelongsTo
     {
-        $model = MoonShineAuth::model();
+        $model = MoonShineAuth::getModel();
 
         return $this->belongsTo(
             $model::class,
