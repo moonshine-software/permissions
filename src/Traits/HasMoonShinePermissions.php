@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MoonShine\Permissions\Traits;
 
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use MoonShine\Laravel\Enums\Ability;
+use MoonShine\Support\Enums\Ability;
 use MoonShine\Laravel\MoonShineAuth;
 use MoonShine\Permissions\Models\MoonshineUserPermission;
 
