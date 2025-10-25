@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace MoonShine\Permissions\Http\Requests;
 
+use MoonShine\Laravel\Http\Requests\MoonShineFormRequest;
 use MoonShine\Support\Enums\Ability;
 use MoonShine\Support\Enums\Action;
-use MoonShine\Laravel\Http\Requests\MoonShineFormRequest;
 
 final class PermissionFormRequest extends MoonShineFormRequest
 {
