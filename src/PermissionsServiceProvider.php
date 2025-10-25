@@ -9,7 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use MoonShine\Contracts\Core\DependencyInjection\ConfiguratorContract;
 use MoonShine\Contracts\Core\ResourceContract;
 use MoonShine\Laravel\DependencyInjection\MoonShineConfigurator;
-use MoonShine\Laravel\Enums\Ability;
+use MoonShine\Support\Enums\Ability;
 use MoonShine\Permissions\Traits\HasMoonShinePermissions;
 
 final class PermissionsServiceProvider extends ServiceProvider
